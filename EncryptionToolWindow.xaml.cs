@@ -25,16 +25,17 @@ namespace EncryptionTool
         public MainWindow()
         {
             InitializeComponent();
+            cryptoHelper = new SimpleEncrypt();
         }
 
         public void EncryptClick(object sender, RoutedEventArgs e)
         {
-            //DecryptTextBox.Text = cryptoHelper.encrypt(EncryptTextBox.Text);
+            DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
         }
 
         public void DecryptClick(object sender, RoutedEventArgs e)
         {
-            //EncryptTextBox.Text = cryptoHelper.decrypt(DecryptTextBox.Text);
+            EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
         }
     }
 }
