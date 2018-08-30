@@ -13,8 +13,8 @@ namespace EncryptionToolLibUnitTests
         {
             helper = new SimpleEncrypt();
             text = "hello world";
-    }
-    [TestMethod]
+        }
+        [TestMethod]
         public void TestSimple()
         {
             Assert.AreEqual(helper.Decrypt(helper.Encrypt(text)), text);

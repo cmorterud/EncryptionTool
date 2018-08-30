@@ -21,7 +21,7 @@ namespace EncryptionTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private IEncryptionHelper cryptoHelper;
+        private SimpleEncrypt cryptoHelper;
         public MainWindow()
         {
             InitializeComponent();
