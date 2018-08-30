@@ -91,7 +91,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="EncryptionToolLib\EncryptionToolLib.csproj">
+      <Project>{28bb4b15-dc5b-46f4-ae20-2a31508752e6}</Project>
+      <Name>EncryptionToolLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EncryptionToolLib;
 
 namespace EncryptionTool
 {
@@ -20,20 +21,20 @@ namespace EncryptionTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        private EncryptionHelper cryptoHelper;
+        //private IEncryptionHelper cryptoHelper;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void EncryptClick(object sender, RoutedEventArgs e)
+        public void EncryptClick(object sender, RoutedEventArgs e)
         {
-            DecryptTextBox.Text = cryptoHelper.encrypt(EncryptTextBox.Text);
+            //DecryptTextBox.Text = cryptoHelper.encrypt(EncryptTextBox.Text);
         }
 
-        private void DecryptClick(object sender, RoutedEventArgs e)
+        public void DecryptClick(object sender, RoutedEventArgs e)
         {
-            EncryptTextBox.Text = cryptoHelper.decrypt(DecryptTextBox.Text);
+            //EncryptTextBox.Text = cryptoHelper.decrypt(DecryptTextBox.Text);
         }
     }
 }
