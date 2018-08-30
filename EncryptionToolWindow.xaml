@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EncryptionTool"
         mc:Ignorable="d"
-        Title="MainWindow" Height="486.586" Width="875">
-    <Grid Margin="10,-25,-18,-6" VerticalAlignment="Center" ShowGridLines="True" HorizontalAlignment="Center">
+        Title="Encryption Tool" Height="465.586" Width="850">
+    <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="55*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="390"/>
-            <ColumnDefinition Width="415"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="grid" HorizontalAlignment="Center" Height="278" Margin="356,-236,34,0" VerticalAlignment="Bottom" Width="0">
             <Grid.ColumnDefinitions>
@@ -21,8 +21,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <TextBox x:Name="EncryptTextBox" Height="300" TextWrapping="Wrap" Text="Enter text to be encrypted..." VerticalAlignment="Center" Margin="20" Grid.Row="1" />
-        <TextBox x:Name="DecryptTextBox" TextWrapping="Wrap" Text="Enter text to be decrypted..." VerticalAlignment="Center" Margin="20" RenderTransformOrigin="0.546,0.654" Height="300" Grid.Row="1" Grid.Column="1"/>
+        <TextBox x:Name="EncryptTextBox" Height="300" TextWrapping="Wrap" Text="Enter text to be encrypted..." Margin="20" Grid.Row="1" />
+        <TextBox x:Name="DecryptTextBox" TextWrapping="Wrap" Text="Enter text to be decrypted..." Margin="20,20,-272,20" RenderTransformOrigin="0.546,0.654" Grid.Row="1" Grid.Column="1"/>
         <Button x:Name="EncryptButton" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="20,12,0,0" Click="EncryptClick" Height="20"/>
         <Button x:Name="DecryptButton" Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="20,12,0,0" Click="DecryptClick" Height="20" Grid.Column="1"/>
     </Grid>
