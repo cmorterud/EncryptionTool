@@ -24,5 +24,20 @@ namespace EncryptionTool
         {
             InitializeComponent();
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void EncryptClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void DecryptClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
