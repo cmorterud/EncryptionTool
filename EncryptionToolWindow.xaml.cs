@@ -20,24 +20,20 @@ namespace EncryptionTool
     /// </summary>
     public partial class MainWindow : Window
     {
+        private EncryptionHelper cryptoHelper;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void EncryptClick(object sender, RoutedEventArgs e)
         {
-            
+            DecryptTextBox.Text = cryptoHelper.encrypt(EncryptTextBox.Text);
         }
 
         private void DecryptClick(object sender, RoutedEventArgs e)
         {
-
+            EncryptTextBox.Text = cryptoHelper.decrypt(DecryptTextBox.Text);
         }
     }
 }
