@@ -37,5 +37,10 @@ namespace EncryptionTool
         {
             EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

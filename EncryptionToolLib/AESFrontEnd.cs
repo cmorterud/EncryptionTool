@@ -3,23 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ArtisanCode.SimpleAesEncryption;
+using System.Security.Cryptography;
 
 namespace EncryptionToolLib
 {
+    // Official AES standard
+    // https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.197.pdf
     public class AESFrontEnd : IEncryptionHelper
     {
-        public string key = null;
-        public RijndaelMessageEncryptor EncryptionHelper = null;
-        public RijndaelMessageDecryptor DecryptionHelper = null;
+        private AesCryptoServiceProvider aesService = null;
+        private string key;
         public AESFrontEnd()
         {
-            EncryptionHelper = new RijndaelMessageEncryptor();
-            DecryptionHelper = new RijndaelMessageDecryptor();
+            // AES-128 for now
+            aesService = new AesCryptoServiceProvider
+            {
+                BlockSize = 128,
+                KeySize = 128,
+                Padding = PaddingMode.PKCS7,
+                Mode = CipherMode.CBC
+            };
+            aesService.GenerateIV();
+
+
         }
         public void SetKey(string _key)
         {
             key = _key;
+            aesService.Key = Convert.FromBase64String(key);
         }
         public string Encrypt(string Plaintext)
         {
