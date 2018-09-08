@@ -16,7 +16,7 @@ namespace EncryptionToolLib
         }
         public string Hash(string text)
         {
-            var bytes = Encoding.Unicode.GetBytes(text);
+            var bytes = Encoding.UTF8.GetBytes(text);
             var hash = SHAProvider.ComputeHash(bytes);
             text = Convert.ToBase64String(hash);
             return text;
