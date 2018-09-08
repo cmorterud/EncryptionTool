@@ -8,7 +8,7 @@ namespace EncryptionToolLib
 {
     public class SimpleEncrypt : IEncryptionHelper
     {
-        private const string ENC_KEY = "ENCRYPTED";
+        private string _key = "ENCRYPTED";
         public string Decrypt(string text)
         {
             var positionBegin = text.IndexOf(' ') + 1;
@@ -17,7 +17,11 @@ namespace EncryptionToolLib
         }
         public string Encrypt(string text)
         {
-            return "[" + ENC_KEY + " " + text + "]";
+            return "[" + _key + " " + text + "]";
+        }
+        public void SetKey(string key)
+        {
+            _key = key;
         }
     }
 }

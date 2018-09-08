@@ -6,5 +6,6 @@ namespace EncryptionToolLib
     {
         string Encrypt(string PlainText);
         string Decrypt(string EncryptedText);
+        void SetKey(string key);
     }
 }

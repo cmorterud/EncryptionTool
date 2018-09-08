@@ -25,7 +25,7 @@ namespace EncryptionTool
         public MainWindow()
         {
             InitializeComponent();
-            cryptoHelper = new SimpleEncrypt();
+            cryptoHelper = new AESFrontEnd();
         }
 
         public void EncryptClick(object sender, RoutedEventArgs e)
