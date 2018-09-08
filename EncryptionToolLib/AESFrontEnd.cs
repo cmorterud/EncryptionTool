@@ -57,7 +57,7 @@ namespace EncryptionToolLib
         }
         private string EncryptString(SymmetricAlgorithm symAlg, string inString)
         {
-            byte[] inBlock = Encoding.UTF8.GetBytes(inString);
+            byte[] inBlock = Encoding.Unicode.GetBytes(inString);
             ICryptoTransform xfrm = symAlg.CreateEncryptor();
             byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
 
@@ -69,7 +69,7 @@ namespace EncryptionToolLib
             ICryptoTransform xfrm = symAlg.CreateDecryptor();
             byte[] outBlock = xfrm.TransformFinalBlock(inBytes, 0, inBytes.Length);
 
-            return Encoding.UTF8.GetString(outBlock);
+            return Encoding.Unicode.GetString(outBlock);
         }
     }
 }

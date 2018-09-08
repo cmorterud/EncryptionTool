@@ -10,13 +10,14 @@ namespace EncryptionToolLib
     public class PasswordStretch
     {
         private SHA256 SHAProvider;
+        // TODO: Dependency Injection
         public PasswordStretch()
         {
             SHAProvider = new SHA256Managed();
         }
         public string Hash(string text)
         {
-            var bytes = Encoding.UTF8.GetBytes(text);
+            var bytes = Encoding.Unicode.GetBytes(text);
             var hash = SHAProvider.ComputeHash(bytes);
             text = Convert.ToBase64String(hash);
             return text;
