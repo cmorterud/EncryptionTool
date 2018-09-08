@@ -26,8 +26,6 @@ namespace EncryptionToolLib
                 Mode = CipherMode.CBC
             };
             aesService.GenerateIV();
-
-
         }
         public void SetKey(string _key)
         {

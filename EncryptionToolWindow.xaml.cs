@@ -33,6 +33,18 @@ namespace EncryptionTool
 
         public void EncryptClick(object sender, RoutedEventArgs e)
         {
+            SetKey();
+            DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
+        }
+
+        public void DecryptClick(object sender, RoutedEventArgs e)
+        {
+            SetKey();
+            EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
+        }
+
+        private void SetKey()
+        {
             string key = "";
 
             // account for null-able bool
@@ -49,12 +61,6 @@ namespace EncryptionTool
 
             cryptoHelper.SetKey(key);
             Base64_key_text_box.Text = key;
-            DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
-        }
-
-        public void DecryptClick(object sender, RoutedEventArgs e)
-        {
-            EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
         }
     }
 }
