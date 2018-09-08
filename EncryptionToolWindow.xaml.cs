@@ -21,26 +21,40 @@ namespace EncryptionTool
     /// </summary>
     public partial class MainWindow : Window
     {
+        // TODO: add dependency injection, dependency profile
         private IEncryptionHelper cryptoHelper;
+        private PasswordStretch stretchHelper;
         public MainWindow()
         {
             InitializeComponent();
             cryptoHelper = new AESFrontEnd();
+            stretchHelper = new PasswordStretch();
         }
 
         public void EncryptClick(object sender, RoutedEventArgs e)
         {
+            string key = "";
+
+            // account for null-able bool
+            var isChecked = GenerateKeyFromHash.IsChecked ?? false;
+            if (isChecked)
+            {
+                var pwStretch = stretchHelper.Hash(PasswordBox.Text);
+                key = pwStretch;
+            }
+            else
+            {
+                key = Base64_key_text_box.Text;
+            }
+
+            cryptoHelper.SetKey(key);
+            Base64_key_text_box.Text = key;
             DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
         }
 
         public void DecryptClick(object sender, RoutedEventArgs e)
         {
             EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

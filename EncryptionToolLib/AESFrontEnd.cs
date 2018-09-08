@@ -9,6 +9,7 @@ namespace EncryptionToolLib
 {
     // Official AES standard
     // https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.197.pdf
+    // Microsoft standard
     // https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.symmetricalgorithm.createencryptor?view=netframework-4.7.2
     public class AESFrontEnd : IEncryptionHelper
     {

@@ -7,13 +7,17 @@ using System.Security.Cryptography;
 
 namespace EncryptionToolLib
 {
-    class PasswordStretch
+    public class PasswordStretch
     {
         private SHA256 SHAProvider;
+        public PasswordStretch()
+        {
+            SHAProvider = new SHA256Managed();
+        }
         public string Hash(string text)
         {
-            var base64 = Convert.FromBase64String(text);
-            var hash = SHAProvider.ComputeHash(base64);
+            var bytes = Encoding.Unicode.GetBytes(text);
+            var hash = SHAProvider.ComputeHash(bytes);
             text = Convert.ToBase64String(hash);
             return text;
         }
