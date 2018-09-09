@@ -15,6 +15,11 @@ namespace EncryptionToolLib
     {
         private AesCryptoServiceProvider aesService = null;
         private string key;
+        public enum KEYSIZE
+        {
+            AES128 = 128,
+            AES256 = 256
+        }
         public AESFrontEnd()
         {
             // AES-128 for now
@@ -52,6 +57,10 @@ namespace EncryptionToolLib
             {
                 throw new ArgumentException("Key has whitespace");
             }
+        }
+        public void SwitchKeySize(KEYSIZE size)
+        {
+            aesService.KeySize = (int)size;
         }
         private string EncryptString(SymmetricAlgorithm symAlg, string inString)
         {

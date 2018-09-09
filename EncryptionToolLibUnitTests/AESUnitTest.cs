@@ -14,7 +14,7 @@ namespace EncryptionToolLibUnitTests
             aesService = new AESFrontEnd();
         }
         [TestMethod]
-        public void TestSimple()
+        public void TestSimple128()
         {
             string text = "hello world";
             string key128 = "AAECAwQFBgcICQoLDA0ODw==";
