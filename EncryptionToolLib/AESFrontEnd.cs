@@ -43,6 +43,7 @@ namespace EncryptionToolLib
         public string Encrypt(string Plaintext)
         {
             CheckKey();
+            // generate new IV, part of standard
             aesService.GenerateIV();
             return EncryptString(aesService, Plaintext);
         }
