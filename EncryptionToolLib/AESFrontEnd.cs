@@ -15,22 +15,25 @@ namespace EncryptionToolLib
     {
         private AesCryptoServiceProvider aesService = null;
         private string key;
+        private int numBytesIV;
+        private const int bytesToBit = 8;
         public enum KEYSIZE
         {
             AES128 = 128,
             AES256 = 256
         }
+        KEYSIZE size = KEYSIZE.AES128;
         public AESFrontEnd()
         {
             // AES-128 for now
             aesService = new AesCryptoServiceProvider
             {
                 BlockSize = 128,
-                KeySize = 128,
-                Padding = PaddingMode.PKCS7,
+                KeySize = (int)size,
+                Padding = PaddingMode.PKCS7, 
                 Mode = CipherMode.CBC
             };
-            aesService.GenerateIV();
+            size = KEYSIZE.AES128;
         }
         public void SetKey(string _key)
         {
@@ -40,6 +43,7 @@ namespace EncryptionToolLib
         public string Encrypt(string Plaintext)
         {
             CheckKey();
+            aesService.GenerateIV();
             return EncryptString(aesService, Plaintext);
         }
         public string Decrypt(string EncryptedText)
@@ -58,23 +62,39 @@ namespace EncryptionToolLib
                 throw new ArgumentException("Key has whitespace");
             }
         }
-        public void SwitchKeySize(KEYSIZE size)
+        public void SwitchKeySize(KEYSIZE _size)
         {
-            aesService.KeySize = (int)size;
+            aesService.KeySize = (int)_size;
+            size = _size;
         }
         private string EncryptString(SymmetricAlgorithm symAlg, string inString)
         {
+            numBytesIV = (int)size / bytesToBit;
+
             byte[] inBlock = Encoding.Unicode.GetBytes(inString);
             ICryptoTransform xfrm = symAlg.CreateEncryptor();
+
             byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
 
-            return Convert.ToBase64String(outBlock);
+            var outArray = new byte[aesService.IV.Length + outBlock.Length];
+            aesService.IV.CopyTo(outArray, 0);
+            outBlock.CopyTo(outArray, numBytesIV);
+
+            return Convert.ToBase64String(outArray);
         }
         private string DecryptString(SymmetricAlgorithm symAlg, string inString)
         {
-            byte[] inBytes = Convert.FromBase64String(inString);
+            numBytesIV = (int)size / bytesToBit;
+
+            var inBlock = Convert.FromBase64String(inString);
+
+            var bytesIV = new byte[numBytesIV];
+            Array.Copy(inBlock, bytesIV, numBytesIV);
+
+            aesService.IV = bytesIV;
+
             ICryptoTransform xfrm = symAlg.CreateDecryptor();
-            byte[] outBlock = xfrm.TransformFinalBlock(inBytes, 0, inBytes.Length);
+            byte[] outBlock = xfrm.TransformFinalBlock(inBlock, numBytesIV, inBlock.Length - numBytesIV);
 
             return Encoding.Unicode.GetString(outBlock);
         }
