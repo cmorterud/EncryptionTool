@@ -72,12 +72,15 @@ namespace EncryptionToolLib
             numBytesIV = (int)size / bytesToBit;
 
             byte[] inBlock = Encoding.Unicode.GetBytes(inString);
-            ICryptoTransform xfrm = symAlg.CreateEncryptor();
 
+            // encrypt
+            ICryptoTransform xfrm = symAlg.CreateEncryptor();
             byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
 
+            // write the IV to the beginning of the message
             var outArray = new byte[aesService.IV.Length + outBlock.Length];
             aesService.IV.CopyTo(outArray, 0);
+            // write the encrypted message to the message
             outBlock.CopyTo(outArray, numBytesIV);
 
             return Convert.ToBase64String(outArray);
@@ -88,11 +91,12 @@ namespace EncryptionToolLib
 
             var inBlock = Convert.FromBase64String(inString);
 
+            // read the IV from the message
             var bytesIV = new byte[numBytesIV];
             Array.Copy(inBlock, bytesIV, numBytesIV);
-
             aesService.IV = bytesIV;
 
+            // decrypt using the IV read from the message
             ICryptoTransform xfrm = symAlg.CreateDecryptor();
             byte[] outBlock = xfrm.TransformFinalBlock(inBlock, numBytesIV, inBlock.Length - numBytesIV);
 
