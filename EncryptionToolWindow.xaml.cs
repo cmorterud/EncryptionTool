@@ -24,10 +24,11 @@ namespace EncryptionTool
         // TODO: add dependency injection, dependency profile
         private IEncryptionHelper cryptoHelper;
         private PasswordStretch stretchHelper;
+        private AESFrontEnd.KEYSIZE size = AESFrontEnd.KEYSIZE.AES128;
         public MainWindow()
         {
             InitializeComponent();
-            cryptoHelper = new AESFrontEnd();
+            cryptoHelper = new AESFrontEnd(size);
             stretchHelper = new PasswordStretch();
         }
 
@@ -61,6 +62,16 @@ namespace EncryptionTool
 
             cryptoHelper.SetKey(key);
             Base64_key_text_box.Text = key;
+        }
+
+        private void AES256_radio_Checked(object sender, RoutedEventArgs e)
+        {
+            cryptoHelper = new AESFrontEnd(AESFrontEnd.KEYSIZE.AES256);
+        }
+
+        private void AES128_radio_Checked(object sender, RoutedEventArgs e)
+        {
+            cryptoHelper = new AESFrontEnd(AESFrontEnd.KEYSIZE.AES256);
         }
     }
 }

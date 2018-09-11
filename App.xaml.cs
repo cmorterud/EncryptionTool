@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace EncryptionTool
 {
@@ -19,4 +20,5 @@ namespace EncryptionTool
             e.Handled = true;
         }
     }
+
 }
