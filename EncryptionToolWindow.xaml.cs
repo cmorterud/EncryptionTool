@@ -34,34 +34,17 @@ namespace EncryptionTool
 
         public void EncryptClick(object sender, RoutedEventArgs e)
         {
-            SetKey();
+            CheckKeyRadio();
             DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
         }
 
         public void DecryptClick(object sender, RoutedEventArgs e)
         {
-            SetKey();
+            if(GenUsingPassword.IsChecked ?? false)
+            {
+                GenerateKeyUsingPassword();
+            }
             EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
-        }
-
-        private void SetKey()
-        {
-            string key = "";
-
-            // account for null-able bool
-            var isChecked = GenerateKeyFromHash.IsChecked ?? false;
-            if (isChecked)
-            {
-                var pwStretch = stretchHelper.Hash(PasswordBox.Text);
-                key = pwStretch;
-            }
-            else
-            {
-                key = Base64_key_text_box.Text;
-            }
-
-            cryptoHelper.SetKey(key);
-            Base64_key_text_box.Text = key;
         }
 
         private void AES256_radio_Checked(object sender, RoutedEventArgs e)
@@ -71,7 +54,40 @@ namespace EncryptionTool
 
         private void AES128_radio_Checked(object sender, RoutedEventArgs e)
         {
-            cryptoHelper = new AESFrontEnd(AESFrontEnd.KEYSIZE.AES256);
+            cryptoHelper = new AESFrontEnd(AESFrontEnd.KEYSIZE.AES128);
+        }
+
+        private void CheckKeyRadio()
+        {
+            if (SecurelyGenerate.IsChecked ?? false)
+            {
+                cryptoHelper.SetKey();
+                Base64_key_text_box.Text = cryptoHelper.GetKey();
+            }
+            else if(PasteInKey.IsChecked ?? false)
+            {
+                var key = "";
+                key = Base64_key_text_box.Text;
+                cryptoHelper.SetKey(key);
+                Base64_key_text_box.Text = cryptoHelper.GetKey();
+            }
+            else if(GenUsingPassword.IsChecked ?? false)
+            {
+                GenerateKeyUsingPassword();
+            }
+            else
+            {
+                // error
+            }
+        }
+
+        private void GenerateKeyUsingPassword()
+        {
+            var key = "";
+            var pwStretch = stretchHelper.Hash(PasswordBox.Text);
+            key = pwStretch;
+            cryptoHelper.SetKey(key);
+            Base64_key_text_box.Text = cryptoHelper.GetKey();
         }
     }
 }

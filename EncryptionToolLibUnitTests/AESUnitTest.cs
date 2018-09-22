@@ -39,5 +39,27 @@ namespace EncryptionToolLibUnitTests
             var decryptedText = aesService128.Decrypt(encryptedText);
             Assert.AreEqual(text, decryptedText);
         }
+
+        [TestMethod]
+        public void TestGen128()
+        {
+            string text = "hello world";
+            aesService128.SetKey();
+
+            var encryptedText = aesService128.Encrypt(text);
+            var decryptedText = aesService128.Decrypt(encryptedText);
+            Assert.AreEqual(text, decryptedText);
+        }
+
+        [TestMethod]
+        public void TestGen256()
+        {
+            string text = "hello world";
+            aesService256.SetKey();
+
+            var encryptedText = aesService256.Encrypt(text);
+            var decryptedText = aesService256.Decrypt(encryptedText);
+            Assert.AreEqual(text, decryptedText);
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace EncryptionToolLib
     public class AESFrontEnd : IEncryptionHelper
     {
         private AesCryptoServiceProvider aesService = null;
-        private string key;
+        private byte[] key;
         private const int bytesToBit = 8;
         public enum KEYSIZE
         {
@@ -26,7 +26,6 @@ namespace EncryptionToolLib
         private const int bytesInBlock = blockSize / bytesToBit;
         public AESFrontEnd(KEYSIZE size)
         {
-            // AES-128 for now
             aesService = new AesCryptoServiceProvider
             {
                 BlockSize = blockSize,
@@ -35,25 +34,25 @@ namespace EncryptionToolLib
                 Mode = CipherMode.CBC
             };
             _size = size;
+            SetKey();
         }
+        public void SetKey()
+        {
+            aesService.GenerateKey();
+            key = aesService.Key;
+        }
+
+        public string GetKey() {
+            return Convert.ToBase64String(key);
+        }
+
         public void SetKey(string _key)
         {
-            key = _key;
-            aesService.Key = Convert.FromBase64String(key);
+            CheckKey(_key);   
+            key = Convert.FromBase64String(_key);
+            aesService.Key = key;
         }
-        public string Encrypt(string Plaintext)
-        {
-            CheckKey();
-            // generate new IV, part of standard
-            aesService.GenerateIV();
-            return EncryptString(aesService, Plaintext);
-        }
-        public string Decrypt(string EncryptedText)
-        {
-            CheckKey();
-            return DecryptString(aesService, EncryptedText);
-        }
-        private void CheckKey()
+        private void CheckKey(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -64,11 +63,27 @@ namespace EncryptionToolLib
                 throw new ArgumentException("Key has whitespace");
             }
         }
+        public string Encrypt(string Plaintext)
+        {
+            // generate new IV, part of standard
+            aesService.GenerateIV();
+            return EncryptString(aesService, Plaintext);
+        }
+        public string Decrypt(string EncryptedText)
+        {
+            return DecryptString(aesService, EncryptedText);
+        }
         private string EncryptString(SymmetricAlgorithm symAlg, string inString)
         {
 
             byte[] inBlock = Encoding.Unicode.GetBytes(inString);
 
+            var outArray = EncryptBytes(symAlg, inBlock);
+
+            return Convert.ToBase64String(outArray);
+        }
+        private byte[] EncryptBytes(SymmetricAlgorithm symAlg, byte[] inBlock)
+        {
             // encrypt
             ICryptoTransform xfrm = symAlg.CreateEncryptor();
             byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
@@ -79,12 +94,19 @@ namespace EncryptionToolLib
             // write the encrypted message to the message
             outBlock.CopyTo(outArray, bytesInBlock);
 
-            return Convert.ToBase64String(outArray);
+            return outArray;
         }
         private string DecryptString(SymmetricAlgorithm symAlg, string inString)
         {
 
             var inBlock = Convert.FromBase64String(inString);
+
+            var outBlock = DecryptBytes(symAlg, inBlock);
+
+            return Encoding.Unicode.GetString(outBlock);
+        }
+        private byte[] DecryptBytes(SymmetricAlgorithm symAlg, byte[] inBlock)
+        {
 
             // read the IV from the message
             var bytesIV = new byte[bytesInBlock];
@@ -94,8 +116,7 @@ namespace EncryptionToolLib
             // decrypt using the IV read from the message
             ICryptoTransform xfrm = symAlg.CreateDecryptor();
             byte[] outBlock = xfrm.TransformFinalBlock(inBlock, bytesInBlock, inBlock.Length - bytesInBlock);
-
-            return Encoding.Unicode.GetString(outBlock);
+            return outBlock;
         }
     }
 }

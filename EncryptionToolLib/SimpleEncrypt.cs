@@ -23,5 +23,10 @@ namespace EncryptionToolLib
         {
             _key = key;
         }
+        public void SetKey() { }
+        public string GetKey()
+        {
+            return _key;
+        }
     }
 }
