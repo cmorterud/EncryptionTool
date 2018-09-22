@@ -47,12 +47,12 @@ namespace EncryptionTool
             EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
         }
 
-        private void AES256_radio_Checked(object sender, RoutedEventArgs e)
+        private void AES256RadioChecked(object sender, RoutedEventArgs e)
         {
             cryptoHelper = new AESFrontEnd(AESFrontEnd.KEYSIZE.AES256);
         }
 
-        private void AES128_radio_Checked(object sender, RoutedEventArgs e)
+        private void AES128RadioChecked(object sender, RoutedEventArgs e)
         {
             cryptoHelper = new AESFrontEnd(AESFrontEnd.KEYSIZE.AES128);
         }
@@ -62,14 +62,14 @@ namespace EncryptionTool
             if (SecurelyGenerate.IsChecked ?? false)
             {
                 cryptoHelper.SetKey();
-                Base64_key_text_box.Text = cryptoHelper.GetKey();
+                Base64KeyTextBox.Text = cryptoHelper.GetKey();
             }
             else if(PasteInKey.IsChecked ?? false)
             {
                 var key = "";
-                key = Base64_key_text_box.Text;
+                key = Base64KeyTextBox.Text;
                 cryptoHelper.SetKey(key);
-                Base64_key_text_box.Text = cryptoHelper.GetKey();
+                Base64KeyTextBox.Text = cryptoHelper.GetKey();
             }
             else if(GenUsingPassword.IsChecked ?? false)
             {
@@ -87,7 +87,7 @@ namespace EncryptionTool
             var pwStretch = stretchHelper.Hash(PasswordBox.Text);
             key = pwStretch;
             cryptoHelper.SetKey(key);
-            Base64_key_text_box.Text = cryptoHelper.GetKey();
+            Base64KeyTextBox.Text = cryptoHelper.GetKey();
         }
     }
 }

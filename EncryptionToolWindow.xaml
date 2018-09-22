@@ -21,11 +21,11 @@
         <Button x:Name="EncryptButton" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="20,12,0,0" Click="EncryptClick" Height="20"/>
         <Button x:Name="DecryptButton" Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="20,12,0,0" Click="DecryptClick" Height="20" Grid.Column="1"/>
         <TextBox x:Name="PasswordBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="password..." VerticalAlignment="Top" Width="202" Margin="189,25,0,0" Grid.Row="1" IsEnabled="{Binding IsChecked, ElementName=GenerateKeyFromHash}"/>
-        <Label Content="Base64 key" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,96,0,0" Grid.Row="1" Width="147" Height="36" RenderTransformOrigin="0.75,1.174"/>
-        <TextBox x:Name="Base64_key_text_box" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Text="Base64 key..." VerticalAlignment="Top" Width="202" Margin="189,53,0,0" Grid.Row="1"/>
-        <RadioButton x:Name="AES128_radio" Content="AES-128" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="67" Margin="256,15,0,0" 
-                     IsChecked="True" GroupName="AlgorithmSelector" Checked="AES128_radio_Checked" />
-        <RadioButton x:Name="AES256_radio" Content="AES-256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="328,15,0,0" GroupName="AlgorithmSelector" Checked="AES256_radio_Checked"/>
+        <Label x:Name="Base64KeyLabel" Content="Base64 key" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,96,0,0" Grid.Row="1" Width="147" Height="36" RenderTransformOrigin="0.75,1.174"/>
+        <TextBox x:Name="Base64KeyTextBox" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Text="Base64 key..." VerticalAlignment="Top" Width="202" Margin="189,53,0,0" Grid.Row="1"/>
+        <RadioButton x:Name="AES128Radio" Content="AES-128" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="67" Margin="256,15,0,0" 
+                     IsChecked="True" GroupName="AlgorithmSelector" Checked="AES128RadioChecked" />
+        <RadioButton x:Name="AES256Radio" Content="AES-256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="328,15,0,0" GroupName="AlgorithmSelector" Checked="AES256RadioChecked"/>
         <Label Content="CBC-PKCS7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,9,0,0" Width="115"/>
         <RadioButton x:Name="GenUsingPassword" Content="SHA256 Password Hash" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0" Grid.Row="1" GroupName="KeySelector" />
         <RadioButton x:Name="SecurelyGenerate" Content="Secure Key Generation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,65,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="True"/>
