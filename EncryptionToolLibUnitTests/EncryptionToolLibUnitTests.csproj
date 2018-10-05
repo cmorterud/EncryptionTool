@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AESUnitTest.cs" />
+    <Compile Include="KeyDeriveIntegrationTest.cs" />
     <Compile Include="SimpleEncryptTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

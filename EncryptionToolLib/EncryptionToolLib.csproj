@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="AESFrontEnd.cs" />
     <Compile Include="IEncryptionHelper.cs" />
-    <Compile Include="PasswordStretch.cs" />
+    <Compile Include="IPasswordStretch.cs" />
+    <Compile Include="PBKDF2Stretch.cs" />
+    <Compile Include="SHA256Stretch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleEncrypt.cs" />
   </ItemGroup>

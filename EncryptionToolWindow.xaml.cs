@@ -23,13 +23,13 @@ namespace EncryptionTool
     {
         // TODO: add dependency injection, dependency profile
         private IEncryptionHelper cryptoHelper;
-        private PasswordStretch stretchHelper;
+        private IPasswordStretch stretchHelper;
         private AESFrontEnd.KEYSIZE size = AESFrontEnd.KEYSIZE.AES128;
         public MainWindow()
         {
             InitializeComponent();
             cryptoHelper = new AESFrontEnd(size);
-            stretchHelper = new PasswordStretch();
+            stretchHelper = new PBKDF2Stretch();
         }
 
         public void EncryptClick(object sender, RoutedEventArgs e)
@@ -40,10 +40,10 @@ namespace EncryptionTool
 
         public void DecryptClick(object sender, RoutedEventArgs e)
         {
-            if(GenUsingPassword.IsChecked ?? false)
-            {
-                GenerateKeyUsingPassword();
-            }
+            //if(GenUsingPassword.IsChecked ?? false)
+            //{
+            //    GenerateKeyUsingPassword();
+            //}
             EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
         }
 
@@ -84,10 +84,18 @@ namespace EncryptionTool
         private void GenerateKeyUsingPassword()
         {
             var key = "";
-            var pwStretch = stretchHelper.Hash(PasswordBox.Text);
+            var pwStretch = StretchString(PasswordBox.Text);
             key = pwStretch;
             cryptoHelper.SetKey(key);
             Base64KeyTextBox.Text = cryptoHelper.GetKey();
+        }
+
+        private string StretchString(string text)
+        {
+            var pwBytes = Encoding.Unicode.GetBytes(text);
+            var pwBytesStretched = stretchHelper.Stretch(pwBytes);
+            var stretchedPW = Convert.ToBase64String(pwBytesStretched);
+            return stretchedPW;
         }
     }
 }
