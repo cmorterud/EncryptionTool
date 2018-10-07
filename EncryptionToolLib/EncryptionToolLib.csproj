@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AESFrontEnd.cs" />
+    <Compile Include="HMACSHA256Verify.cs" />
     <Compile Include="IEncryptionHelper.cs" />
     <Compile Include="IPasswordStretch.cs" />
+    <Compile Include="IVerify.cs" />
     <Compile Include="PBKDF2Stretch.cs" />
     <Compile Include="SHA256Stretch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
