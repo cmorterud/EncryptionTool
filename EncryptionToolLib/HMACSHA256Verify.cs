@@ -10,7 +10,18 @@ namespace EncryptionToolLib
         {
             helper = new HMACSHA256(key);
             var hash = helper.ComputeHash(text);
-            return hash.SequenceEqual(signature);
+
+            var same = true;
+
+            for(int i = 0; i < signature.Length; ++i)
+            {
+                if(signature[i] != hash[i])
+                {
+                    same = false;
+                }
+            }
+
+            return same;
         }
         public byte[] computeMAC(byte[] text, byte[] key)
         {
