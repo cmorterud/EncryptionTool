@@ -44,7 +44,18 @@ namespace EncryptionTool
             //{
             //    GenerateKeyUsingPassword();
             //}
-            EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
+            try
+            {
+                EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
+            }
+            catch(Exception ex)
+            {
+                MessageBoxResult result = MessageBox.Show("Message failed to decrypt, check that you are using the correct key and message.\n" + ex.Message,
+                                          "Message failed to decrypt",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+                EncryptTextBox.Text = "";
+            }
         }
 
         private void AES256RadioChecked(object sender, RoutedEventArgs e)
