@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,9 @@ namespace EncryptionTool
         private IEncryptionHelper cryptoHelper;
         private IPasswordStretch stretchHelper;
         private AESFrontEnd.KEYSIZE size = AESFrontEnd.KEYSIZE.AES128;
+
+        private bool? fileValid = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +39,8 @@ namespace EncryptionTool
         public void EncryptClick(object sender, RoutedEventArgs e)
         {
             CheckKeyRadio();
-            DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
+            CheckFile();
+            Encrypt();
         }
 
         public void DecryptClick(object sender, RoutedEventArgs e)
@@ -44,11 +49,78 @@ namespace EncryptionTool
             //{
             //    GenerateKeyUsingPassword();
             //}
+            CheckFile();
+            Decrypt();
+        }
+
+        private void CheckFile()
+        {
             try
             {
-                EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
+                if (FileMode.IsChecked ?? false)
+                {
+                    // if file is not valid
+                    if (!(fileValid ?? false))
+                    {
+                        throw new System.ArgumentNullException();
+                    }
+                }
             }
-            catch(Exception ex)
+            catch (System.ArgumentNullException ex)
+            {
+                MessageBoxResult result = MessageBox.Show("File is invalid, please try selecting a different file.\n" + ex.Message,
+                                          "Message failed to decrypt",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+            }
+        }
+
+
+        private void Encrypt()
+        {
+            try
+            {
+                if (TextMode.IsChecked ?? false)
+                {
+                    DecryptTextBox.Text = cryptoHelper.Encrypt(EncryptTextBox.Text);
+                }
+                else if (FileMode.IsChecked ?? false)
+                {
+                    var fileString = File.ReadAllText(FileTextBox.Text);
+                    var encryptedString = cryptoHelper.Encrypt(fileString);
+                }
+            }
+            catch(FileNotFoundException ex)
+            {
+                MessageBoxResult result = MessageBox.Show("Selected file was not found.\n" + ex.Message,
+                                          "File not found",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+                EncryptTextBox.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBoxResult result = MessageBox.Show("Message failed to decrypt, check that you are using the correct key and message.\n" + ex.Message,
+                                          "Message failed to encrypt",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+                EncryptTextBox.Text = "";
+            }
+        }
+        private void Decrypt()
+        {
+            try
+            {
+                if(TextMode.IsChecked ?? false)
+                {
+                    EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
+                }
+                else if(FileMode.IsChecked ?? false)
+                {
+
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBoxResult result = MessageBox.Show("Message failed to decrypt, check that you are using the correct key and message.\n" + ex.Message,
                                           "Message failed to decrypt",
@@ -101,6 +173,7 @@ namespace EncryptionTool
             Base64KeyTextBox.Text = cryptoHelper.GetKey();
         }
 
+
         private string StretchString(string text)
         {
             var pwBytes = Encoding.UTF8.GetBytes(text);
@@ -113,12 +186,16 @@ namespace EncryptionTool
         {
             EncryptTextBox.IsEnabled = false;
             DecryptTextBox.IsEnabled = false;
+            BrowseFileButton.IsEnabled = true;
+            FileTextBox.IsEnabled = true;
         }
 
         private void TextChecked(object sender, RoutedEventArgs e)
         {
             EncryptTextBox.IsEnabled = true;
             DecryptTextBox.IsEnabled = true;
+            BrowseFileButton.IsEnabled = false;
+            FileTextBox.IsEnabled = false;
         }
 
         private void SecurelyGenerateChecked(object sender, RoutedEventArgs e)
@@ -134,6 +211,21 @@ namespace EncryptionTool
         private void GenUsingPasswordChecked(object sender, RoutedEventArgs e)
         {
             PasswordBox.IsEnabled = true;
+        }
+
+        private void BrowseFileButtonClick(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "Document"; // Default file name
+
+            fileValid = dlg.ShowDialog();
+
+            if (fileValid == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                FileTextBox.Text = filename;
+            }
         }
     }
 }
