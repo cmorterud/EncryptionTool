@@ -20,7 +20,7 @@ namespace EncryptionToolLibUnitTests
         {
 
             byte[] key = Convert.FromBase64String("FL96VAFThaXJjsotPMphqd5gudvNB9aT");
-            byte[] text = Encoding.Unicode.GetBytes("Hello world!");
+            byte[] text = Encoding.UTF8.GetBytes("Hello world!");
 
             byte[] MAC = helper.computeMAC(text, key);
 
@@ -33,7 +33,7 @@ namespace EncryptionToolLibUnitTests
         {
 
             byte[] key = Convert.FromBase64String("FL96VAFThaXJjsotPMphqd5gudvNB9aT");
-            byte[] text = Encoding.Unicode.GetBytes("Hello world!");
+            byte[] text = Encoding.UTF8.GetBytes("Hello world!");
 
             byte[] MAC = helper.computeMAC(text, key);
 
@@ -44,7 +44,7 @@ namespace EncryptionToolLibUnitTests
         {
 
             byte[] key = Convert.FromBase64String("FL96VAFThaXJjsotPMphqd5gudvNB9aT");
-            byte[] text = Encoding.Unicode.GetBytes("Hello world!");
+            byte[] text = Encoding.UTF8.GetBytes("Hello world!");
 
             byte[] MAC = helper.computeMAC(text, key);
             MAC[8] = 1;

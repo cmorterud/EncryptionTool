@@ -103,10 +103,37 @@ namespace EncryptionTool
 
         private string StretchString(string text)
         {
-            var pwBytes = Encoding.Unicode.GetBytes(text);
+            var pwBytes = Encoding.UTF8.GetBytes(text);
             var pwBytesStretched = stretchHelper.Stretch(pwBytes);
             var stretchedPW = Convert.ToBase64String(pwBytesStretched);
             return stretchedPW;
+        }
+
+        private void FileChecked(object sender, RoutedEventArgs e)
+        {
+            EncryptTextBox.IsEnabled = false;
+            DecryptTextBox.IsEnabled = false;
+        }
+
+        private void TextChecked(object sender, RoutedEventArgs e)
+        {
+            EncryptTextBox.IsEnabled = true;
+            DecryptTextBox.IsEnabled = true;
+        }
+
+        private void SecurelyGenerateChecked(object sender, RoutedEventArgs e)
+        {
+            PasswordBox.IsEnabled = false;
+        }
+
+        private void PasteInKeyChecked(object sender, RoutedEventArgs e)
+        {
+            PasswordBox.IsEnabled = false;
+        }
+
+        private void GenUsingPasswordChecked(object sender, RoutedEventArgs e)
+        {
+            PasswordBox.IsEnabled = true;
         }
     }
 }

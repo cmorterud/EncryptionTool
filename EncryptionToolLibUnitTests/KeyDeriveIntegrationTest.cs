@@ -49,7 +49,7 @@ namespace EncryptionToolLibUnitTests
             string pw = "hello world";
             string text = "the man who sold the world";
 
-            var stretchBytes = pwStretch.Stretch(Encoding.Unicode.GetBytes(pw));
+            var stretchBytes = pwStretch.Stretch(Encoding.UTF8.GetBytes(pw));
             var stretchedPW = Convert.ToBase64String(stretchBytes);
 
             encryptHelper.SetKey(stretchedPW);

@@ -76,7 +76,7 @@ namespace EncryptionToolLib
         private string EncryptString(SymmetricAlgorithm symAlg, string inString)
         {
 
-            byte[] inBlock = Encoding.Unicode.GetBytes(inString);
+            byte[] inBlock = Encoding.UTF8.GetBytes(inString);
 
             var outArray = EncryptBytes(symAlg, inBlock);
 
@@ -103,7 +103,7 @@ namespace EncryptionToolLib
 
             var outBlock = DecryptBytes(symAlg, inBlock);
 
-            return Encoding.Unicode.GetString(outBlock);
+            return Encoding.UTF8.GetString(outBlock);
         }
         private byte[] DecryptBytes(SymmetricAlgorithm symAlg, byte[] inBlock)
         {
