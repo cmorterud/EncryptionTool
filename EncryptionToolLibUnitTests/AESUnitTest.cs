@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EncryptionToolLib;
 
@@ -29,7 +29,7 @@ namespace EncryptionToolLibUnitTests
         }
 
         [TestMethod]
-        public void TestSimple256()
+        public void TestInterop256()
         {
             string text = "hello world";
             string key256 = "INzelqOUVBoeb+A7fvwhXhCtcf6GKWU+oc1xMRYTWaU=";
@@ -37,6 +37,18 @@ namespace EncryptionToolLibUnitTests
 
             var encryptedText = aesService128.Encrypt(text);
             var decryptedText = aesService128.Decrypt(encryptedText);
+            Assert.AreEqual(text, decryptedText);
+        }
+
+        [TestMethod]
+        public void TestSimple256()
+        {
+            string text = "hello world";
+            string key256 = "INzelqOUVBoeb+A7fvwhXhCtcf6GKWU+oc1xMRYTWaU=";
+            aesService256.SetKey(key256);
+
+            var encryptedText = aesService256.Encrypt(text);
+            var decryptedText = aesService256.Decrypt(encryptedText);
             Assert.AreEqual(text, decryptedText);
         }
 
@@ -59,6 +71,18 @@ namespace EncryptionToolLibUnitTests
 
             var encryptedText = aesService256.Encrypt(text);
             var decryptedText = aesService256.Decrypt(encryptedText);
+            Assert.AreEqual(text, decryptedText);
+        }
+
+        [TestMethod]
+        public void TestEncryptLargeText()
+        {
+            var text = Properties.Resources.TextFile1;
+
+            aesService128.SetKey();
+
+            var encryptedText = aesService128.Encrypt(text);
+            var decryptedText = aesService128.Decrypt(encryptedText);
             Assert.AreEqual(text, decryptedText);
         }
     }
