@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EncryptionToolLib;
+using Microsoft.Win32;
 
 namespace EncryptionTool
 {
@@ -26,6 +27,11 @@ namespace EncryptionTool
         private IEncryptionHelper cryptoHelper;
         private IPasswordStretch stretchHelper;
         private AESFrontEnd.KEYSIZE size = AESFrontEnd.KEYSIZE.AES128;
+
+        enum CryptoMode
+        {
+            Encrypt, Decrypt
+        }
 
         private bool? fileValid = false;
 
@@ -45,10 +51,6 @@ namespace EncryptionTool
 
         public void DecryptClick(object sender, RoutedEventArgs e)
         {
-            //if(GenUsingPassword.IsChecked ?? false)
-            //{
-            //    GenerateKeyUsingPassword();
-            //}
             CheckFile();
             Decrypt();
         }
@@ -88,6 +90,7 @@ namespace EncryptionTool
                 {
                     var fileString = File.ReadAllText(FileTextBox.Text);
                     var encryptedString = cryptoHelper.Encrypt(fileString);
+                    SaveFile(CryptoMode.Encrypt, encryptedString);
                 }
             }
             catch(FileNotFoundException ex)
@@ -111,22 +114,54 @@ namespace EncryptionTool
         {
             try
             {
-                if(TextMode.IsChecked ?? false)
+                if (TextMode.IsChecked ?? false)
                 {
                     EncryptTextBox.Text = cryptoHelper.Decrypt(DecryptTextBox.Text);
                 }
-                else if(FileMode.IsChecked ?? false)
+                else if (FileMode.IsChecked ?? false)
                 {
-
+                    var fileString = File.ReadAllText(FileTextBox.Text);
+                    var encryptedString = cryptoHelper.Encrypt(fileString);
+                    SaveFile(CryptoMode.Encrypt, encryptedString);
                 }
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBoxResult result = MessageBox.Show("Selected file was not found.\n" + ex.Message,
+                                          "File not found",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+                EncryptTextBox.Text = "";
             }
             catch (Exception ex)
             {
                 MessageBoxResult result = MessageBox.Show("Message failed to decrypt, check that you are using the correct key and message.\n" + ex.Message,
-                                          "Message failed to decrypt",
+                                          "Message failed to encrypt",
                                           MessageBoxButton.OK,
                                           MessageBoxImage.Error);
                 EncryptTextBox.Text = "";
+            }
+        }
+
+        private void SaveFile(CryptoMode mode, string text)
+        {
+            // Displays a SaveFileDialog so the user can save the encrypted text
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            if(mode == CryptoMode.Encrypt)
+            {
+                saveFileDialog1.Title = "Save encrypted file";
+            }
+            else if(mode == CryptoMode.Decrypt)
+            {
+                saveFileDialog1.Title = "Save decrypted file";
+                //saveFileDialog1.f
+            }
+            saveFileDialog1.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.
+            if (saveFileDialog1.FileName != "")
+            {
+               File.WriteAllText(saveFileDialog1.FileName, text);
             }
         }
 
