@@ -21,6 +21,7 @@ This is a Windows Presentation Foundation user interface to the AES encryption s
 4. Choose data to encrypt.
 	* Either paste text into right-hand box, or choose a file to decrypt using browse file.
 5. Click decrypt.
+6. On failure to decrypt, error box will pop up.
 
 # Internals
 ## Initialization Vector
@@ -40,6 +41,8 @@ The key upon generation is encoded as a base 64 number for brevity.
 
 ## AES Implementation
 This interface uses the Microsoft reference AES CBC-PCKS7 implementation.
+CBC is weak to padding oracle attacks. This attack can be prevented
+by verifying a HMAC of the ciphertext before attempting to decrypt.
 
 ## PBKDF2 Implementation
 This interface uses the RFC-2898 standard Microsoft implementation.
