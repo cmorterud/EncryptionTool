@@ -121,8 +121,8 @@ namespace EncryptionTool
                 else if (FileMode.IsChecked ?? false)
                 {
                     var fileString = File.ReadAllText(FileTextBox.Text);
-                    var encryptedString = cryptoHelper.Encrypt(fileString);
-                    SaveFile(CryptoMode.Encrypt, encryptedString);
+                    var decrypted = cryptoHelper.Decrypt(fileString);
+                    SaveFile(CryptoMode.Decrypt, decrypted);
                 }
             }
             catch (FileNotFoundException ex)
