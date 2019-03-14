@@ -29,10 +29,10 @@
                      IsChecked="True" GroupName="AlgorithmSelector" Checked="AES128RadioChecked" />
         <RadioButton x:Name="AES256Radio" Content="AES-256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="328,15,0,0" GroupName="AlgorithmSelector" Checked="AES256RadioChecked"/>
         <Label Content="CBC-PKCS7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,9,0,0" Width="115"/>
-        <RadioButton x:Name="GenUsingPassword" Content="SHA256 Password Hash" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="True" Checked="GenUsingPasswordChecked" />
+        <RadioButton x:Name="GenUsingPassword" Content="PBKDF2 Password Hash" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="True" Checked="GenUsingPasswordChecked" />
         <RadioButton x:Name="SecurelyGenerate" Content="Secure Key Generation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,65,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="False" Checked="SecurelyGenerateChecked"/>
         <RadioButton x:Name="PasteInKey" Content="Use Key Pasted In Box" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,45,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="False" Checked="PasteInKeyChecked" />
-        <RadioButton x:Name="TextMode" Content="Encrypt Text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Grid.Row="1" GroupName="ModeSelector" IsChecked="True" Grid.Column="1" Checked="TextChecked"/>
-        <RadioButton x:Name="FileMode" Content="Encrypt File" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,28,0,0" Grid.Row="1" GroupName="ModeSelector" IsChecked="False" Grid.Column="1" Checked="FileChecked"/>
+        <RadioButton x:Name="TextMode" Content="Text Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Grid.Row="1" GroupName="ModeSelector" IsChecked="True" Grid.Column="1" Checked="TextChecked"/>
+        <RadioButton x:Name="FileMode" Content="File Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,28,0,0" Grid.Row="1" GroupName="ModeSelector" IsChecked="False" Grid.Column="1" Checked="FileChecked"/>
     </Grid>
 </Window>
