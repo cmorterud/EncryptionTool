@@ -21,18 +21,18 @@
         <TextBox x:Name="DecryptTextBox" TextWrapping="Wrap" Text="Enter text to be decrypted..." Margin="10,107,10,10" RenderTransformOrigin="0.546,0.654" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
         <Button x:Name="EncryptButton" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,0,0,0" Click="EncryptClick" Height="20" Grid.Row="3"/>
         <Button x:Name="DecryptButton" Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,0,0,0" Click="DecryptClick" Height="20" Grid.Column="1" Grid.Row="3"/>
-        <Button x:Name="BrowseFileButton" Content="Browse File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="10,53,0,0" Grid.Row="1" Click="BrowseFileButtonClick" Height="20"/>
-        <TextBox x:Name="FileTextBox" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="Filename" VerticalAlignment="Top" Width="381" Grid.Column="1" Margin="10,78,0,0" Grid.Row="1" IsEnabled="True"/>
+        <Button x:Name="BrowseFileButton" Content="Browse File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="11,25,0,0" Grid.Row="1" Click="BrowseFileButtonClick" Height="20"/>
+        <TextBox x:Name="FileTextBox" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="Filename" VerticalAlignment="Top" Width="381" Grid.Column="1" Margin="11,50,0,0" Grid.Row="1" IsEnabled="True"/>
         <TextBox x:Name="PasswordBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="password..." VerticalAlignment="Top" Width="202" Margin="189,25,0,0" Grid.Row="1" IsEnabled="{Binding IsChecked, ElementName=GenerateKeyFromHash}"/>
         <TextBox x:Name="Base64KeyTextBox" HorizontalAlignment="Left" Height="45" TextWrapping="Wrap" Text="Base64 key..." VerticalAlignment="Top" Width="202" Margin="189,53,0,0" Grid.Row="1"/>
-        <RadioButton x:Name="AES128Radio" Content="AES-128" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="67" Margin="218,15,0,0" 
+        <RadioButton x:Name="AES128Radio" Content="AES-128" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="67" Margin="187,15,0,0" 
                      IsChecked="True" GroupName="AlgorithmSelector" Checked="AES128RadioChecked" />
-        <RadioButton x:Name="AES256Radio" Content="AES-256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290,15,0,0" GroupName="AlgorithmSelector" Checked="AES256RadioChecked" Height="15" Width="63"/>
+        <RadioButton x:Name="AES256Radio" Content="AES-256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="259,15,0,0" GroupName="AlgorithmSelector" Checked="AES256RadioChecked" Height="15" Width="63"/>
         <Label Content="AES Block Cipher CBC-PKCS7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,9,0,0" Width="177" Height="26"/>
         <RadioButton x:Name="GenUsingPassword" Content="PBKDF2 Password Hash" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,25,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="True" Checked="GenUsingPasswordChecked" Height="15" Width="143" />
         <RadioButton x:Name="SecurelyGenerate" Content="Secure Key Generation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,65,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="False" Checked="SecurelyGenerateChecked" Height="15" Width="139"/>
         <RadioButton x:Name="PasteInKey" Content="Use Key Pasted In Box" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,45,0,0" Grid.Row="1" GroupName="KeySelector" IsChecked="False" Checked="PasteInKeyChecked" Height="15" Width="135" />
-        <RadioButton x:Name="TextMode" Content="Text Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Grid.Row="1" GroupName="ModeSelector" IsChecked="True" Grid.Column="1" Checked="TextChecked" Height="15" Width="74"/>
-        <RadioButton x:Name="FileMode" Content="File Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,28,0,0" Grid.Row="1" GroupName="ModeSelector" IsChecked="False" Grid.Column="1" Checked="FileChecked" Height="15" Width="71"/>
+        <RadioButton x:Name="TextMode" Content="Text Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,15,0,0" GroupName="ModeSelector" IsChecked="True" Grid.Column="1" Checked="TextChecked" Height="15" Width="74"/>
+        <RadioButton x:Name="FileMode" Content="File Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,15,0,0" GroupName="ModeSelector" IsChecked="False" Grid.Column="1" Checked="FileChecked" Height="15" Width="71"/>
     </Grid>
 </Window>
