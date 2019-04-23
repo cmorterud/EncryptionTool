@@ -112,6 +112,15 @@ namespace EncryptionTool
         }
         private void Decrypt()
         {
+            if(!PasteInKey.IsChecked ?? false)
+            {
+                MessageBoxResult result = MessageBox.Show("If decrypting, please select paste in key.\n",
+                                          "Unknown Decryption Key",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+                return;
+            }
+            CheckKeyRadio();
             try
             {
                 if (TextMode.IsChecked ?? false)
