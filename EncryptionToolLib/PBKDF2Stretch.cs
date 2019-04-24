@@ -13,7 +13,7 @@ namespace EncryptionToolLib
         {
             // https://security.stackexchange.com/questions/3959/recommended-of-iterations-when-using-pkbdf2-sha256
             const int iterations = 100000;
-            byte[] salt = new byte[16];
+            byte[] salt = new byte[32];
             using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())
             {
                 // Fill the array with a random value.
@@ -22,9 +22,7 @@ namespace EncryptionToolLib
 
             var keyGen = new Rfc2898DeriveBytes(text, salt, iterations);
 
-            var pwStretch = new byte[16];
-
-            return keyGen.GetBytes(16);
+            return keyGen.GetBytes(32);
         }
     }
 }
